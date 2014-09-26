@@ -194,6 +194,8 @@
 		public function after_setup_theme__determineIfLoadingCustomCSS()
 		{
 
+			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts__loadSideCommentsStylesheet' ) );
+			
 			$hideCommentsOption = get_studiorum_option( 'side_comments_options', 'studiorum_side_comments_hide_standard_comments' );
 
 			if( !$hideCommentsOption || $hideCommentsOption != 'true' ){
@@ -218,6 +220,15 @@
 		{
 
 			wp_enqueue_style( 'studiorum-side-comments', trailingslashit( STUDIORUM_SIDE_COMMENTS_URL ) . 'assets/css/studiorum-side-comments.css' );
+
+		}/* wp_enqueue_scripts__loadSideCommentsCSS() */
+
+
+		public function wp_enqueue_scripts__loadSideCommentsStylesheet()
+		{
+
+			wp_enqueue_style( 'studiorum-side-comments-styles', trailingslashit( STUDIORUM_SIDE_COMMENTS_URL ) . 'assets/css/studiorum-side-comments-stylesheet.css' );
+
 
 		}/* wp_enqueue_scripts__loadSideCommentsCSS() */
 
