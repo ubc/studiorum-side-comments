@@ -60,7 +60,7 @@
 			add_action( 'studiorum_settings_setup_start', array( $this, 'studiorum_settings_setup_start__addFilters' ) );
 
 			// Determine if we're loading our custom css
-			add_action( 'after_setup_theme', array( $this, 'after_setup_theme__determineIfLoadingCustomCSS' ) );
+			add_action( 'template_redirect', array( $this, 'template_redirect__determineIfLoadingCustomCSS' ) );
 
 		}/* __construct() */
 
@@ -149,8 +149,8 @@
 		 *
 		 * @since 0.1
 		 *
-		 * @param string $param description
-		 * @return string|int returnDescription
+		 * @param array $settingsFields Currently registered settings fields for this section
+		 * @return array Modified settings fields array
 		 */
 
 		public function studiorum_settings_settings_fields__addSideCommentsSettingsFields( $settingsFields )
@@ -191,18 +191,26 @@
 		 * @return null
 		 */
 
-		public function after_setup_theme__determineIfLoadingCustomCSS()
+		public function template_redirect__determineIfLoadingCustomCSS()
 		{
 
 			$hideCommentsOption = get_studiorum_option( 'side_comments_options', 'studiorum_side_comments_hide_standard_comments' );
 
-			if( !$hideCommentsOption || $hideCommentsOption != 'true' ){
+			if( $hideCommentsOption && $hideCommentsOption == 'true' ){
+				add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts__loadSideCommentsCSS' ) );
+				return;
+			}
+
+			// We'll also add a filter, so other pluigins can determine if we're hiding the standard comments or not
+			$hideCommentsFilter = apply_filters( 'studiorum_side_comments_hide_standard_comments', false );			
+
+			if( !$hideCommentsFilter ){
 				return;
 			}
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts__loadSideCommentsCSS' ) );
 
-		}/* after_setup_theme__determineIfLoadingCustomCSS() */
+		}/* template_redirect__determineIfLoadingCustomCSS() */
 
 
 		/**
