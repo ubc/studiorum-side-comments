@@ -62,6 +62,10 @@
 			// Determine if we're loading our custom css
 			add_action( 'template_redirect', array( $this, 'template_redirect__determineIfLoadingCustomCSS' ) );
 
+			// Register ourself as an addon
+			add_filter( 'studiorum_modules', array( $this, 'studiorum_modules__registerAsModule' ) );
+
+
 		}/* __construct() */
 
 
@@ -230,12 +234,47 @@
 		}/* wp_enqueue_scripts__loadSideCommentsCSS() */
 
 
+		/**
+			 * Register ourself as a studiorum addon, so it's available in the main studiorum page
+			 *
+			 * @since 0.1
+			 *
+			 * @param array $modules Currently registered modules
+			 * @return array $modules modified list of modules
+			 */
+
+			public function studiorum_modules__registerAsModule( $modules )
+			{
+
+				if( !$modules || !is_array( $modules ) ){
+					$modules = array();
+				}
+
+				$modules['studiorum-side-comments'] = array(
+					'id' 				=> 'studiorum_side_comments',
+					'plugin_slug'		=> 'studiorum-side-comments',
+					'title' 			=> __( 'Side/Inline Comments', 'studiorum' ),
+					'requires'			=> 'wp-side-comments',
+					'icon' 				=> 'migrate', // dashicons-#
+					'excerpt' 			=> __( 'Enable people to comment on a paragraph-by-paragraph basis on your content.', 'studiorum' ),
+					'image' 			=> 'http://dummyimage.com/310/162',
+					'link' 				=> 'http://code.ubc.ca/studiorum/studiorum-side-comments',
+					'content' 			=> __( '<p>Comments at the bottom of one of your pages are great. But they could be better. What if the commenter wants to talk about one specific paragraph? The flow might be lost. Side Comments (also called inline comments) allow you to have a much more semantic conversation.</p>', 'studiorum' ),
+					'content_sidebar' 	=> 'http://dummyimage.com/300x150',
+					'date'				=> '2014-09-01'
+				);
+
+				return $modules;
+
+			}/* studiorum_modules__registerAsModule() */
+
+
 	}/* class Studiorum_Side_Comments */
 
 
 	/**
 	 *
-	 * Instantiate the gradebook
+	 * Instantiate the class
 	 *
 	 * @since 0.1.0
 	 * @return null
