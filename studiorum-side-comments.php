@@ -198,6 +198,9 @@
 		public function template_redirect__determineIfLoadingCustomCSS()
 		{
 
+			// We always load the UBC-Style comments sheet
+			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts__load_ssc_default_theme_css' ) );
+
 			$hideCommentsOption = get_studiorum_option( 'side_comments_options', 'studiorum_side_comments_hide_standard_comments' );
 
 			if( $hideCommentsOption && $hideCommentsOption == 'true' ){
@@ -215,6 +218,22 @@
 			add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts__loadSideCommentsCSS' ) );
 
 		}/* template_redirect__determineIfLoadingCustomCSS() */
+
+
+		/**
+		 * Load the default WPCS stylesheet
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param null
+		 * @return null
+		 */
+
+		public function wp_enqueue_scripts__load_ssc_default_theme_css() {
+
+			wp_enqueue_style( 'studiorum-side-comments', trailingslashit( STUDIORUM_SIDE_COMMENTS_URL ) . 'assets/css/studiorum-side-comments-default.css' );
+
+		}/* wp_enqueue_scripts__load_ssc_default_theme_css() */
 
 
 		/**
