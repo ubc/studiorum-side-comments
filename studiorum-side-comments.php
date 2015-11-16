@@ -170,8 +170,8 @@
 				'title'	=>	__( 'Hide standard comments?', 'studiorum-side-comments' ) . '<span class="label-note">' . __( 'At the bottom of most posts and pages on WordPress sites there are the normal, linear comments. Would you like to hide these by default and just show the inline comments for studiorum submissions?', 'studiorum-side-comments' ) . '</span>',
 				'type'	=>	'select',
 				'default'	=>	'true',	// the index key of the label array below which yields 'Yellow'.
-				'label'	=>	array( 
-					'true'	=>	'True',		
+				'label'	=>	array(
+					'true'	=>	'True',
 					'false'	=>	'False'
 				),
 				'attributes'	=>	array(
@@ -209,7 +209,7 @@
 			}
 
 			// We'll also add a filter, so other pluigins can determine if we're hiding the standard comments or not
-			$hideCommentsFilter = apply_filters( 'studiorum_side_comments_hide_standard_comments', false );			
+			$hideCommentsFilter = apply_filters( 'studiorum_side_comments_hide_standard_comments', false );
 
 			if( !$hideCommentsFilter ){
 				return;
