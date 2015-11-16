@@ -2,7 +2,7 @@
 	/*
 	 * Plugin Name: Studiorum Side Comments
 	 * Description: Provides additional options for the WP Side Comments Plugin
-	 * Version:     0.1
+	 * Version:     0.1.1
 	 * Plugin URI:  #
 	 * Author:      UBC, CTLT, Richard Tape
 	 * Author URI:  http://ubc.ca/
